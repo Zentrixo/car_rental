@@ -3,9 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from '../redux/slice/authSlice'
 
-import {
-  Container, Box, Paper, Typography, Link, TextField, Button, Alert, PasswordRulesTooltip
-} from "../components";
+import { Container, Box, Paper, Typography, Link, TextField, Button, Alert } from "../components";
+import { PasswordRulesTooltip } from "../components";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
 
@@ -128,11 +127,13 @@ const Login = () => {
               {/* Optional password rules help */}
               <PasswordRulesTooltip />
 
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
-                <Link to="/forgot-password" sx={{ fontSize: '0.875rem' }}>
-                  {FORGOT_PASSWORD_LINK_TEXT}
-                </Link>
-              </Box>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1 }}>
+            <Typography variant="body2" color="text.secondary">
+            <Link to="/forgot-password">
+              {FORGOT_PASSWORD_LINK_TEXT}
+            </Link>
+            </Typography>
+            </Box>
 
               <Button
                 text={isLoading ? LOGIN_LOADING_TEXT : LOGIN_BUTTON_TEXT}
