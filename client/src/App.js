@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -10,10 +10,13 @@ import ManageBooking from "./pages/ManageBooking";
 import Booking from './pages/Booking'
 import LocationPage from "./pages/Location";
 import "leaflet/dist/leaflet.css";
+import Cars from "./pages/Cars";
+import ScrollToTop from "./components/common/ScrollToTop";
 
 const App = () => {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -21,6 +24,7 @@ const App = () => {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/" element={<Home />} />
         <Route path="/location" element={<LocationPage />} />
+        <Route path="/cars" element={<Cars />} />
         <Route path="/book/:carId" element={<Booking />} />
         {/* Producted routes */}
         <Route path="/Dashboard" element={
