@@ -16,7 +16,7 @@ import {
 } from '@mui/icons-material';
 
 const BookingPage = () => {
-    // Mocking the data passed from the Fleet/Details page
+    // Mocking the data 
     const selectedCar = {
         make: "Tesla",
         model: "Model Y",
