@@ -1,13 +1,19 @@
 import React, { useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { searchCars } from "../redux/slice/carSlice";
 import CarCard from "../components/cars/CarCard";
+
 import {
   Box, Button, Container, Typography, Grid, Alert, Paper, Stack, Chip, Divider,
   LocationAutocomplete, RentalDatePicker, Select, Header, Footer, SmartAssistantWidget
 } from "../components";
-import { Search, Bolt, Verified, AttachMoney, SupportAgent, DirectionsCar, LocationOn, EventAvailable, Shield } from "@mui/icons-material";
+
+import {
+  Search, ArrowForward, Bolt, Verified, AttachMoney, SupportAgent,
+  DirectionsCar, LocationOn, EventAvailable, Shield
+} from "@mui/icons-material";
 
 const TYPES = [
   { label: "All types", value: "all" },
@@ -34,29 +40,37 @@ const getArea = (o) => {
 
 export default function Home() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { cars = [], loading, error } = useSelector((s) => s.cars || {});
 
   const [type, setType] = useState("all");
   const [pickup, setPickup] = useState(dayjs());
   const [drop, setDrop] = useState(dayjs().add(3, "day"));
-  const [area, setArea] = useState(null);
-  const [searched, setSearched] = useState(false);
-  const [err, setErr] = useState("");
   const [locVal, setLocVal] = useState(DEFAULT_HOUSTON);
   const [locInput, setLocInput] = useState(DEFAULT_HOUSTON.primary);
 
+  const [area, setArea] = useState(null);
+  const [searched, setSearched] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
 
+  // landing browse load
   useEffect(() => {
-    dispatch(searchCars({
-      type: "all",
-      location: "Houston, TX 77001",
-      pickupDate: dayjs().format("MM/DD/YYYY"),
-      returnDate: dayjs().add(30, "day").format("MM/DD/YYYY"),
-    }));
+    dispatch(
+      searchCars({
+        type: "all",
+        location: "Houston, TX 77001",
+        pickupDate: dayjs().format("MM/DD/YYYY"),
+        returnDate: dayjs().add(30, "day").format("MM/DD/YYYY"),
+      })
+    );
     setSearched(false);
   }, [dispatch]);
 
-  const datesValid = useMemo(() => !!pickup && !!drop && dayjs(drop).isAfter(pickup, "day"), [pickup, drop]);
+  const datesValid = useMemo(
+    () => !!pickup && !!drop && dayjs(drop).isAfter(pickup, "day"),
+    [pickup, drop]
+  );
+
   const canSearch = !!locVal && !!pickup && !!drop && !!type && datesValid;
 
   const handlePickup = (d) => {
@@ -65,33 +79,44 @@ export default function Home() {
   };
 
   const handleSearch = async () => {
-    setErr("");
-    if (!canSearch) return setErr("Please fill all 4 fields correctly (select a location suggestion + valid dates).");
+    setErrMsg("");
+    if (!canSearch) return setErrMsg("Fill all 4 fields correctly (location suggestion + valid dates).");
 
     const a = getArea(locVal);
     setArea(a);
 
-    const action = await dispatch(searchCars({
-      type,
-      location: [a.city, a.state, a.zip].filter(Boolean).join(", "),
-      pickupDate: pickup.format("MM/DD/YYYY"),
-      returnDate: drop.format("MM/DD/YYYY"),
-    }));
+    const action = await dispatch(
+      searchCars({
+        type,
+        location: [a.city, a.state, a.zip].filter(Boolean).join(", "),
+        pickupDate: pickup.format("MM/DD/YYYY"),
+        returnDate: drop.format("MM/DD/YYYY"),
+      })
+    );
 
     if (!searchCars.rejected?.match?.(action)) setSearched(true);
   };
 
-  const searchCtx = area && {
-    pickupLocation: [area.city, area.state, area.zip].filter(Boolean).join(", "),
-    pickupDate: pickup.format("YYYY-MM-DD"),
-    returnDate: drop.format("YYYY-MM-DD"),
-    type,
+  const previewCars = useMemo(() => (cars || []).slice(0, 3), [cars]);
+
+  const goAllCars = () => {
+    const a = getArea(locVal);
+    navigate("/cars", {
+      state: {
+        type,
+        locationObj: locVal,
+        locationText: [a.city, a.state, a.zip].filter(Boolean).join(", "),
+        pickup: pickup.format("MM/DD/YYYY"),
+        drop: drop.format("MM/DD/YYYY"),
+      },
+    });
   };
 
   const title = searched ? "Search Results" : "Browse Our Cars";
-  const subtitle = searched && area
-    ? `Showing cars for ${[area.city, area.state, area.zip].filter(Boolean).join(", ")}`
-    : "Browse what we generally have, or search by location + dates for exact availability.";
+  const subtitle =
+    searched && area
+      ? `Showing cars for ${[area.city, area.state, area.zip].filter(Boolean).join(", ")}`
+      : "Browse what we generally have, or search by location + dates for exact availability.";
 
   const perks = [
     { icon: <Bolt />, label: "Fast booking", color: "#7c4dff" },
@@ -101,9 +126,9 @@ export default function Home() {
   ];
 
   const steps = [
-    { icon: <DirectionsCar />, t: "Find the perfect car", d: "Browse options and pick what fits your trip." },
-    { icon: <LocationOn />, t: "Select a pickup location", d: "Choose a city/ZIP suggestion in Texas." },
-    { icon: <EventAvailable />, t: "Book & hit the road", d: "Confirm instantly and drive with confidence." },
+    { icon: <LocationOn />, t: "Pick a location", d: "Choose a Texas city / ZIP from suggestions." },
+    { icon: <EventAvailable />, t: "Select dates", d: "Pick pickup + return dates for availability." },
+    { icon: <DirectionsCar />, t: "Choose your car", d: "Compare options and book instantly." },
   ];
 
   return (
@@ -165,7 +190,6 @@ export default function Home() {
               Your next drive, <span style={{ color: "#B2FF59" }}>simplified.</span>
             </Typography>
 
-            {/* ✅ HARD CENTER FIX: width 100% + textAlign center + block */}
             <Typography
               component="div"
               sx={{
@@ -179,8 +203,7 @@ export default function Home() {
                 lineHeight: 1.7,
               }}
             >
-              DRIVEFLOW helps you find the right car in seconds — clear pricing, verified cars,
-              and quick pickup across Texas.
+              DRIVEFLOW helps you find the right car in seconds — clear pricing, verified cars, and quick pickup across Texas.
             </Typography>
 
             <Stack direction="row" spacing={1} justifyContent="center" flexWrap="wrap" useFlexGap sx={{ width: "100%" }}>
@@ -190,7 +213,7 @@ export default function Home() {
             </Stack>
           </Stack>
 
-          {err && <Alert severity="warning" sx={{ maxWidth: 1100, mx: "auto", mb: 2 }}>{err}</Alert>}
+          {errMsg && <Alert severity="warning" sx={{ maxWidth: 1100, mx: "auto", mb: 2 }}>{errMsg}</Alert>}
 
           {/* SEARCH CARD */}
           <Paper
@@ -206,7 +229,7 @@ export default function Home() {
             }}
           >
             <Box sx={{ display: "flex", gap: 2, flexWrap: { xs: "wrap", md: "nowrap" }, alignItems: "stretch" }}>
-              <Box sx={{ flex: 3, minWidth: { xs: "100%", md: 280 } }}>
+              <Box sx={{ flex: 3, minWidth: { xs: "100%", md: 320 } }}>
                 <LocationAutocomplete
                   label="Pickup Location"
                   placeholder="City, ZIP, or Airport"
@@ -216,6 +239,7 @@ export default function Home() {
                   onInputChange={(e, v) => setLocInput(v)}
                   minChars={2}
                   limit={10}
+                  sx={{ "& .MuiInputBase-root": { height: 56 } }}
                 />
               </Box>
 
@@ -237,7 +261,7 @@ export default function Home() {
                 disabled={!canSearch || loading}
                 sx={{
                   height: 60,
-                  minWidth: 80,
+                  minWidth: 84,
                   borderRadius: 3,
                   fontWeight: 950,
                   backgroundImage: "linear-gradient(135deg, #2E7D32 0%, #00C853 55%, #1A237E 140%)",
@@ -260,25 +284,42 @@ export default function Home() {
 
       {/* LISTING */}
       <Container maxWidth="lg" sx={{ py: { xs: 4, md: 5 }, flexGrow: 1 }}>
-        <Stack spacing={0.8} mb={2.5}>
-          <Typography variant="h4" fontWeight={1000} sx={{ letterSpacing: -0.6 }}>
-            {title}
-          </Typography>
-          <Typography variant="body2" sx={{ color: "text.secondary" }}>
-            {subtitle}
-          </Typography>
+        <Stack direction={{ xs: "column", md: "row" }} spacing={1.5} alignItems={{ xs: "flex-start", md: "center" }} justifyContent="space-between" mb={2.5}>
+          <Box>
+            <Typography variant="h4" fontWeight={1000} sx={{ letterSpacing: -0.6 }}>{title}</Typography>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>{subtitle}</Typography>
+          </Box>
+
+          <Button
+            onClick={goAllCars}
+            variant="contained"
+            endIcon={<ArrowForward />}
+            sx={{
+              px: 4.5,
+              py: 1.6,
+              borderRadius: 999,
+              fontWeight: 1000,
+              fontSize: 16,
+              textTransform: "none",
+              backgroundImage: "linear-gradient(135deg, #1A237E 0%, #7c4dff 60%, #2E7D32 160%)",
+              boxShadow: "0 18px 38px rgba(26,35,126,0.28)",
+              letterSpacing: 0.3,
+              "&:hover": { transform: "translateY(-2px)" },
+            }}
+          >
+            View all cars
+          </Button>
         </Stack>
 
-        {/* ✅ ALL CARS FIRST */}
         {loading ? (
           <Typography>Loading cars…</Typography>
         ) : error ? (
           <Typography color="error">{String(error)}</Typography>
-        ) : cars.length ? (
-          <Grid container spacing={4}>
-            {cars.map((c) => (
-              <Grid item xs={12} sm={6} md={4} key={c._id}>
-                <CarCard car={c} searchContext={searched ? searchCtx : null} />
+        ) : previewCars.length ? (
+          <Grid container spacing={4} justifyContent="center">
+            {previewCars.map((c) => (
+              <Grid item xs={12} sm={6} md={4} key={c._id} sx={{ display: "flex", justifyContent: "center" }}>
+                <CarCard car={c} />
               </Grid>
             ))}
           </Grid>
@@ -286,7 +327,7 @@ export default function Home() {
           <Alert severity="info">No cars available.</Alert>
         )}
 
-        {/* ✅ CONTEXT + HOW IT WORKS BELOW THE LIST */}
+        {/* ✅ PERKS + STEPS (RESTORED) */}
         <Box sx={{ mt: { xs: 4, md: 5 } }}>
           <Paper
             elevation={0}
@@ -316,18 +357,8 @@ export default function Home() {
                   Why DRIVEFLOW?
                 </Typography>
 
-                <Typography
-                  sx={{
-                    color: "text.secondary",
-                    maxWidth: 860,
-                    mx: "auto",
-                    textAlign: "center",
-                    lineHeight: 1.7,
-                    width: "100%",
-                  }}
-                >
-                  Book in minutes with verified cars, clear pricing, and quick pickups across Texas.
-                  No clutter. No confusion. Just drive.
+                <Typography sx={{ color: "text.secondary", maxWidth: 860, mx: "auto", textAlign: "center", lineHeight: 1.7, width: "100%" }}>
+                  Book in minutes with verified cars, clear pricing, and quick pickups across Texas. No clutter. No confusion. Just drive.
                 </Typography>
 
                 <Stack direction="row" spacing={1} justifyContent="center" flexWrap="wrap" useFlexGap sx={{ mt: 1 }}>
@@ -339,7 +370,7 @@ export default function Home() {
 
               <Divider sx={{ my: 3, opacity: 0.6 }} />
 
-              <Grid container spacing={2.5}>
+              <Grid container spacing={2.5} justifyContent="center">
                 {perks.map((p) => (
                   <Grid item xs={12} sm={6} md={3} key={p.label}>
                     <Paper
@@ -354,17 +385,7 @@ export default function Home() {
                       }}
                     >
                       <Box sx={{ display: "flex", alignItems: "center", gap: 1.2 }}>
-                        <Box
-                          sx={{
-                            width: 40,
-                            height: 40,
-                            borderRadius: 2.5,
-                            display: "grid",
-                            placeItems: "center",
-                            bgcolor: `${p.color}18`,
-                            color: p.color,
-                          }}
-                        >
+                        <Box sx={{ width: 40, height: 40, borderRadius: 2.5, display: "grid", placeItems: "center", bgcolor: `${p.color}18`, color: p.color }}>
                           {p.icon}
                         </Box>
                         <Typography fontWeight={950}>{p.label}</Typography>
@@ -381,7 +402,7 @@ export default function Home() {
                 How it works
               </Typography>
 
-              <Grid container spacing={2.5} sx={{ mt: 1 }}>
+              <Grid container spacing={2.5} sx={{ mt: 1 }} justifyContent="center">
                 {steps.map((s) => (
                   <Grid item xs={12} md={4} key={s.t}>
                     <Paper
@@ -410,7 +431,8 @@ export default function Home() {
           </Paper>
         </Box>
       </Container>
-       <SmartAssistantWidget />
+
+      <SmartAssistantWidget />
       <Footer />
     </Box>
   );
