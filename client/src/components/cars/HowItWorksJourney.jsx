@@ -23,7 +23,7 @@ export default function HowItWorksJourney() {
   return (
     <Box sx={{ py: 8, textAlign: "center" }}>
       <Typography variant="h4" fontWeight={900} mb={1}>
-        How DRIVEFLOW works
+        How CampusCar Rentals works
       </Typography>
       <Typography color="text.secondary" mb={5}>
         From search to steering wheel — simple, fast, and secure.

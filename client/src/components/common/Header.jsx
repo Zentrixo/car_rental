@@ -88,7 +88,7 @@ const Header = () => {
             }}
           >
             <Typography variant="h6" sx={{ fontWeight: 800, color: "#1A237E" }}>
-              DRIVE<span style={{ color: "#2E7D32" }}>FLOW</span>
+              CampusCar <span style={{ color: "#2E7D32" }}>Rentals </span>
             </Typography>
           </Box>
 

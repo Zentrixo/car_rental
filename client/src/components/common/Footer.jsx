@@ -18,7 +18,7 @@ const Footer = () => {
           {/* Brand + tagline */}
           <Grid item xs={12} md={4}>
             <Typography variant="h6" sx={{ fontWeight: 800, mb: 1 }}>
-              DRIVE<span style={{ color: "#2E7D32" }}>FLOW</span>
+              CampusCar <span style={{ color: "#2E7D32" }}>Rentals</span>
             </Typography>
             <Typography variant="body2" color="grey.400">
               Premium, hassle-free car rentals designed for modern travelers.
@@ -56,8 +56,8 @@ const Footer = () => {
             </Typography>
             <Typography variant="body2" sx={{ mt: 1 }}>
               Email:{" "}
-              <MuiLink href="mailto:support@driveflow.com" color="inherit" underline="hover">
-                support@driveflow.com
+              <MuiLink href="mailto:support@campuscarrentals.com" color="inherit" underline="hover">
+                support@campuscarrentals.com
               </MuiLink>
             </Typography>
           </Grid>
@@ -77,7 +77,7 @@ const Footer = () => {
           }}
         >
           <Typography variant="caption" color="grey.500">
-            © {new Date().getFullYear()} DRIVEFLOW. All rights reserved.
+            © {new Date().getFullYear()} CampusCar Rentals. All rights reserved.
           </Typography>
           <Box sx={{ display: "flex", gap: 2 }}>
             <MuiLink href="#" color="grey.500" underline="hover" variant="caption">

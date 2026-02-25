@@ -203,7 +203,7 @@ export default function Home() {
                 lineHeight: 1.7,
               }}
             >
-              DRIVEFLOW helps you find the right car in seconds — clear pricing, verified cars, and quick pickup across Texas.
+              CampusCar Rentals helps you find the right car in seconds — clear pricing, verified cars, and quick pickup across Texas.
             </Typography>
 
             <Stack direction="row" spacing={1} justifyContent="center" flexWrap="wrap" useFlexGap sx={{ width: "100%" }}>
@@ -354,7 +354,7 @@ export default function Home() {
             <Box sx={{ position: "relative" }}>
               <Stack spacing={1.2} sx={{ textAlign: "center" }}>
                 <Typography variant="h4" fontWeight={950} sx={{ letterSpacing: -0.6, width: "100%" }}>
-                  Why DRIVEFLOW?
+                  Why CampusCar Rentals?
                 </Typography>
 
                 <Typography sx={{ color: "text.secondary", maxWidth: 860, mx: "auto", textAlign: "center", lineHeight: 1.7, width: "100%" }}>
