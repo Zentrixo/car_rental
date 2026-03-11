@@ -3,6 +3,9 @@
 // Regex
 export const EMAIL_VALID = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+//API
+export const API_URL = "https://car-rental-server-b0p7.onrender.com/api";
+
 // Tooltip rules
 export const PASSWORD_TOOLTIP = [
   "Be at least 8 characters",

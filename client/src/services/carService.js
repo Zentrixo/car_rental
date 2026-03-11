@@ -1,7 +1,10 @@
 import axios from "axios";
 
-const API_URL =
-    process.env.REACT_APP_API_URL || "http://localhost:5001/api/cars";
+// const API_URL =
+//     process.env.REACT_APP_API_URL || "http://localhost:5001/api/cars";
+
+    const API_URL = "https://car-rental-server-b0p7.onrender.com/api/cars";
+
 
 export const fetchCars = async (type = "all") => {
     const res = await axios.get(`${API_URL}?type=${type}`);
