@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5001/api/bookings";
+// const API_URL = "http://localhost:5001/api/bookings";
+const API_URL = "https://car-rental-server-b0p7.onrender.com/api/bookings";
+
 
 export const createBooking = async (bookingData) => {
     const response = await axios.post(API_URL, bookingData);
