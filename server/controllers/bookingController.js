@@ -13,7 +13,7 @@ exports.createBooking = async (req, res) => {
             totalPrice,
         } = req.body;
 
-        // Check car availability for selected dates
+        // Check car availability for selected dates 'console'
         const overlappingBooking = await Booking.findOne({
             car,
             status: "Booked",
