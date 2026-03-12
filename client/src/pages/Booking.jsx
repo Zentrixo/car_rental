@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
     Box, Container, Grid, Typography, TextField, Button, Paper, Divider,
-    Stack, Checkbox, FormControlLabel, Radio, RadioGroup, IconButton,
-    InputAdornment, Switch, CardMedia, Chip, Stepper, Step, StepLabel,
-    Alert, Avatar, List, ListItem, ListItemIcon, ListItemText, Badge
+    Stack, Checkbox, FormControlLabel, Radio, RadioGroup,
+    InputAdornment, Switch, CardMedia, Chip,
+    Alert, Avatar, List, ListItem, ListItemIcon, ListItemText
 } from '@mui/material';
 import {
-    LocalGasStation, AirlineSeatReclineNormal, Settings, Info,
+    LocalGasStation, AirlineSeatReclineNormal, Settings,
     CreditCard, Lock, Event, LocationOn, CheckCircle, Security,
     PersonAdd, DirectionsCar, Receipt, Payment,
     CalendarToday, AccessTime, LocalOffer, VerifiedUser, Star,

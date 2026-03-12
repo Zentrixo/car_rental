@@ -5,7 +5,6 @@ import {
     Card,
     Typography,
     Chip,
-    InputAdornment,
     IconButton,
     Paper,
     Stack,
@@ -13,7 +12,7 @@ import {
     Button,
     Divider,
 } from "@mui/material";
-import { Search, MyLocation, Menu, Star, DirectionsCar, Close, Room } from "@mui/icons-material";
+import { Search, MyLocation, Menu, Star, DirectionsCar, Close } from "@mui/icons-material";
 import { MapContainer, TileLayer, Marker, useMap, ZoomControl } from "react-leaflet";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
 import L from "leaflet";

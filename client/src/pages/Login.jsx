@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginUser } from '../redux/slice/authSlice'
 
 import { Container, Box, Paper, Typography, Link, TextField, Button, Alert } from "../components";
@@ -18,7 +18,6 @@ import { validateEmail, validatePassword, validateLoginSubmit } from "../compone
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector(state => state.auth);
 
   const [formData, setFormData] = useState({
     email: "",
