@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
 // ✅ Import wrappers from parent folder's index.js
-// because CarCard is in: src/components/cars
 // parent folder is: src/components
 import {
   Card,
