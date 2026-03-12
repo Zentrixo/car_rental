@@ -22,7 +22,6 @@ import { signupUser } from '../redux/slice/authSlice'
 const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector(state => state.auth);
 
   const [formData, setFormData] = useState({
     name: "",

@@ -206,15 +206,15 @@ export default function ManageBooking() {
     setDetailsOpen(true);
   };
 
-  const openCancel = (b) => {
-    setCancelTarget(b);
-    setCancelOpen(true);
-  };
+  // const openCancel = (b) => {
+  //   setCancelTarget(b);
+  //   setCancelOpen(true);
+  // };
 
-  const confirmCancel = async () => {
-    setCancelOpen(false);
-    alert("Cancel confirmed (backend hookup next).");
-  };
+  // const confirmCancel = async () => {
+  //   setCancelOpen(false);
+  //   alert("Cancel confirmed (backend hookup next).");
+  // };
 
   const downloadAgreement = (b) => {
     const safeBooking = {

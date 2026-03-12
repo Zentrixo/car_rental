@@ -78,8 +78,8 @@ export async function generateAgreementPdf({ booking, customer, signature }) {
   const pickupTime = booking?.pickupTime || "";
   const returnTime = booking?.returnTime || "";
 
-  const pickupLocation = booking?.pickupLocation || "";
-  const returnLocation = booking?.returnLocation || "";
+  // const pickupLocation = booking?.pickupLocation || "";
+  // const returnLocation = booking?.returnLocation || "";
   const rateMonthly = booking?.monthlyRate ?? "";
   const perDiem = booking?.dailyRate ?? "";
 

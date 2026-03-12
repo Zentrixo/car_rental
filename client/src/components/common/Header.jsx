@@ -8,7 +8,6 @@ import {
   Stack,
   Box,
   Menu,
-  MenuItem,
   Divider,
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -19,7 +18,7 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { token, user } = useSelector((state) => state.auth);
+  const { token} = useSelector((state) => state.auth);
 
   const [loginAnchorEl, setLoginAnchorEl] = useState(null);
   const isLoginMenuOpen = Boolean(loginAnchorEl);
