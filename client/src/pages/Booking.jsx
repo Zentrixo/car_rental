@@ -45,7 +45,7 @@ const BookingPage = () => {
         (extras.tollPass ? 7.99 * rentalDays : 0);
     const totalAmount = (selectedCar.dailyRate * rentalDays) + insuranceCost + extrasCost + 45.50;
 
-    const steps = ['Select Car', 'Booking Details', 'Payment', 'Confirmation'];
+    // const steps = ['Select Car', 'Booking Details', 'Payment', 'Confirmation'];
 
     return (
         <Box sx={{ bgcolor: '#f5f7fa', minHeight: '100vh', py: { xs: 3, md: 5 } }}>

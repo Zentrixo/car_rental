@@ -1,4 +1,4 @@
-import { Box, Typography, Stack} from "../index";
+import { Box, Typography} from "../index";
 import {
   LocationOn,
   DateRange,

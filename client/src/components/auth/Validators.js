@@ -16,8 +16,7 @@ import {
 } from "../constants/Constant";
 
 import {
-  LOGIN_FILL_FIELDS_MSG,
-  LOGIN_INVALID_MSG
+  LOGIN_FILL_FIELDS_MSG
 } from "../constants/Constant";
 
 /**
@@ -102,9 +101,9 @@ export function validateSignupSubmit(formData, existingEmails = []) {
   const hasPassword = Boolean(formData.password);
   const hasConfirmPassword = Boolean(formData.confirmPassword);
 
-if (!hasName || !hasEmail || !hasPassword || !hasConfirmPassword) {
-  return { ok: false, message: FILL_ALL_FIELDS_MSG };
-}
+  if (!hasName || !hasEmail || !hasPassword || !hasConfirmPassword) {
+    return { ok: false, message: FILL_ALL_FIELDS_MSG };
+  }
 
   const emailRes = validateEmail(formData.email, existingEmails);
   if (!emailRes.valid) return { ok: false, message: INVALID_EMAIL_MSG };

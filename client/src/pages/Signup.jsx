@@ -16,7 +16,7 @@ import {
   validateEmail, validatePassword, validateConfirmPassword, validateSignupSubmit
 } from "../components/auth/Validators";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signupUser } from '../redux/slice/authSlice'
 
 const Signup = () => {
