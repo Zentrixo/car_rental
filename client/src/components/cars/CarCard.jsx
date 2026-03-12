@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
 // ✅ Import wrappers from parent folder's index.js
-// parent folder is: src/components
 import {
   Card,
   CardMedia,
